@@ -2,6 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require('dotenv');
 dotenv.config();
+const app = express();
+const userRouter = require('./routes/user.router');
 
 const connectDb = async () => {
   try {
@@ -13,8 +15,9 @@ const connectDb = async () => {
 };
 connectDb();
 
-const app = express();
-
 app.listen(3000, () => {
   console.log("Server is running on port 3000!!!");
 });
+
+
+app.use('/user', userRouter);
