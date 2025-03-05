@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 const app = express();
 const userRouter = require('./routes/user.router');
-const signUpRouter= require('./routes/auth.route');
+const authRouter = require('./routes/auth.route');
 app.use(express.json());
 
 const connectDb = async () => {
@@ -22,7 +22,7 @@ app.listen(3000, () => {
 });
 
 app.use('/user', userRouter);
-app.use('/auth', signUpRouter);
+app.use('/auth', authRouter);
 
 
 app.use((err, req, res, next)=>{
