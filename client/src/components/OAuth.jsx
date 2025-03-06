@@ -46,7 +46,7 @@ const OAuth = () => {
         dispatch(signInFailure(jsonData.message));
         return;
       }
-      dispatch(signInSuccess());
+      dispatch(signInSuccess(jsonData));
       navigate("/");
     } catch (e) {
       console.log("is going to call failure from catch");
