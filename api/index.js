@@ -1,11 +1,15 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require('dotenv');
-dotenv.config();
-const app = express();
 const userRouter = require('./routes/user.router');
 const authRouter = require('./routes/auth.route');
+const cookieParser = require('cookie-parser'); 
+
+const app = express();
 app.use(express.json());
+dotenv.config();
+app.use(cookieParser());
+
 
 const connectDb = async () => {
   try {
