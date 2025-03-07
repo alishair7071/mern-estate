@@ -3,6 +3,21 @@ const bcryptjs = require("bcryptjs");
 const errorHandler = require("../utills/error");
 const jwt = require("jsonwebtoken");
 
+
+/*
+const generateSupabaseJWT = (userId) => {
+  const payload = {
+    role: 'authenticated', // Required by Supabase
+    sub: userId, // Subject (user ID)
+    exp: Math.floor(Date.now() / 1000) + 60 * 60, // 1 hour expiration
+  };
+
+  // Sign the JWT with Supabase's service_role key
+  const token = jwt.sign(payload, process.env.SUPABASE_SERVICE_ROLE_KEY);
+  return token;
+};
+*/
+
 const signUp = async (req, res, next) => {
   console.log(req.body);
   try {
@@ -35,7 +50,7 @@ const signIn = async (req, res, next) => {
     const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
     const { password: pass, ...rest } = validUser._doc;
     res
-      .cookie("access_token", token, { httpOnly: true })
+      .cookie("access_token", token)
       .status(200)
       .json(rest);
   } catch (e) {
@@ -84,3 +99,6 @@ const signInWithGoogle = async (req, res, next) => {
 };
 
 module.exports = { signUp, signIn, signInWithGoogle };
+
+
+
