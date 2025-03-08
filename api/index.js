@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const userRouter = require('./routes/user.router');
 const authRouter = require('./routes/auth.route');
 const cookieParser = require('cookie-parser'); 
+const listingRouter= require('./routes/listing.route');
 
 const app = express();
 app.use(express.json());
@@ -27,6 +28,7 @@ app.listen(3000, () => {
 
 app.use('/user', userRouter);
 app.use('/auth', authRouter);
+app.use('/listing', listingRouter)
 
 
 app.use((err, req, res, next)=>{
