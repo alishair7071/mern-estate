@@ -64,13 +64,29 @@ const userSlice= createSlice({
             console.log("dispatch: delete failure is called");
             state.error= action.payload;
             state.loading= false;
+        },
+
+        signOutStart: (state)=>{
+            console.log("dispatch: sign Out start is called");
+            state.loading= true
+        },
+        
+        signOutSucces: (state, action)=>{
+            console.log("dispatch: sign Out success is called");
+            state.loading= false,
+            state.currentUser= null,
+            state.error= null
+        },
+
+        signOutFailure: (state, action)=>{
+            console.log("dispatch: sign Out failure is called");
+            state.error= action.payload;
+            state.loading= false
         }
-
-
-    }
-});
+}});
 
 export const {signInStart, signInSuccess, signInFailure,
      uploadStart, uploadFailure, uploadSuccess,
-    deleteStart, deleteFailure, deleteSucces} = userSlice.actions;
+    deleteStart, deleteFailure, deleteSucces,
+    signOutStart, signOutFailure, signOutSucces} = userSlice.actions;
 export default userSlice.reducer;

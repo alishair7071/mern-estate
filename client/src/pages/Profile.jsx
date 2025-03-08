@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { uploadImage } from "../utills/uploadImage";
 import { printSupabase, supabase } from "../supabaseClient";
-import { deleteFailure, deleteStart, deleteSucces, uploadFailure, uploadStart, uploadSuccess } from "../redux/user/userSlice";
+import { deleteFailure, deleteStart, deleteSucces, signOutFailure, signOutStart, signOutSucces, uploadFailure, uploadStart, uploadSuccess } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 
 
@@ -82,11 +82,30 @@ const Profile = () => {
               dispatch(deleteFailure(jsonData.message));
               return;
             }
-
-            dispatch(deleteSucces(jsonData));
-          
+            dispatch(deleteSucces(jsonData));          
         }catch(e){
             dispatch(deleteFailure(e.message))
+        }
+      }
+
+      // handle sign out functionality
+      const signOut= async ()=>{
+
+        try{
+
+          dispatch(signOutStart());
+
+          const res = await fetch('/api/auth/sign-out', {method: "GET"});
+          const jsonData= await res.json();
+          if(jsonData.success==false){
+            dispatch(signOutFailure(jsonData.message));
+            return;
+          }
+          
+          dispatch(signOutSucces(jsonData));
+
+        }catch(e){
+          dispatch(signOutFailure(jsonData.message));
         }
       }
 
@@ -148,7 +167,7 @@ const Profile = () => {
       </div>
       <div className="flex w-lg justify-between text-red-700 mt-3">
         <span onClick={deleteUser} className="cursor-pointer">Delete Account</span>
-        <span className="cursor-pointer">Sign Out</span>
+        <span onClick={signOut} className="cursor-pointer">Sign Out</span>
       </div>
 
       <div className="flex w-lg justify-between text-red-700 mt-3">
