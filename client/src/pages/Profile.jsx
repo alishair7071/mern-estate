@@ -4,7 +4,7 @@ import { uploadImage } from "../utills/uploadImage";
 import { printSupabase, supabase } from "../supabaseClient";
 import { deleteFailure, deleteStart, deleteSucces, signOutFailure, signOutStart, signOutSucces, uploadFailure, uploadStart, uploadSuccess } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
-
+import { Link } from 'react-router-dom'
 
 const Profile = () => {
   let fileRef = useRef(null);
@@ -163,6 +163,9 @@ const Profile = () => {
           >
             Update
           </button>
+
+          <Link className="text-center p-2 bg-green-700 rounded-lg uppercase hover:opacity-90 hover: cursor-pointer" to="/create-listing">
+          Create Listing</Link>
         </form>
       </div>
       <div className="flex w-lg justify-between text-red-700 mt-3">
