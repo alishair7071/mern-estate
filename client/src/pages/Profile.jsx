@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { uploadImage } from "../utills/uploadImage";
 import { printSupabase, supabase } from "../supabaseClient";
-import { uploadFailure, uploadStart, uploadSuccess } from "../redux/user/userSlice";
+import { deleteFailure, deleteStart, deleteSucces, uploadFailure, uploadStart, uploadSuccess } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 
 
@@ -41,9 +41,10 @@ const Profile = () => {
         console.log(formData);
       };
 
+
+      //submit updated data to server to update at server 
       const handleSubmit= async (e)=>{
         e.preventDefault();
-
         try{
           dispatch(uploadStart());
         const response= await fetch(`/api/user/update/${currentUser._id}`,
@@ -68,9 +69,25 @@ const Profile = () => {
         dispatch(uploadFailure(e.message));
         setUpdateSuccess(false);
         }
-        
+      }
 
+      //delete User Account from server
+      const deleteUser= async()=>{
 
+        try{
+            dispatch(deleteStart())
+            const response= await fetch(`/api/user/delete/${currentUser._id}`,{ method: 'DELETE'});
+            const jsonData= response.json();
+            if(jsonData.success==false){
+              dispatch(deleteFailure(jsonData.message));
+              return;
+            }
+
+            dispatch(deleteSucces(jsonData));
+          
+        }catch(e){
+            dispatch(deleteFailure(e.message))
+        }
       }
 
 
@@ -130,7 +147,7 @@ const Profile = () => {
         </form>
       </div>
       <div className="flex w-lg justify-between text-red-700 mt-3">
-        <span className="cursor-pointer">Delete Account</span>
+        <span onClick={deleteUser} className="cursor-pointer">Delete Account</span>
         <span className="cursor-pointer">Sign Out</span>
       </div>
 

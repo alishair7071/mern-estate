@@ -27,9 +27,50 @@ const userSlice= createSlice({
 
             state.error= action.payload,
             state.loading= false
+        },
+
+        uploadStart: (state)=>{
+            console.log("dispatch: upload start is called");
+            state.loading= true;
+        },
+
+        uploadSuccess: (state, action)=>{
+            console.log("dispatch: upload success is called");
+
+            state.currentUser= action.payload,
+            state.loading= false;
+            state.error= null;
+        },
+
+        uploadFailure: (state, action)=>{
+            console.log("dispatch: upload failure is called");
+            state.error= action.payload,
+            state.loading=false;
+        },
+
+        deleteStart: (state)=>{
+            console.log("dispatch: delete start is called");
+            state.loading= true
+        },
+        
+        deleteSucces: (state, action)=>{
+            console.log("dispatch: delete success is called");
+            state.loading= false,
+            state.currentUser= null,
+            state.error= null
+        },
+
+        deleteFailure: (state, action)=>{
+            console.log("dispatch: delete failure is called");
+            state.error= action.payload;
+            state.loading= false;
         }
+
+
     }
 });
 
-export const {signInStart, signInSuccess, signInFailure} = userSlice.actions;
+export const {signInStart, signInSuccess, signInFailure,
+     uploadStart, uploadFailure, uploadSuccess,
+    deleteStart, deleteFailure, deleteSucces} = userSlice.actions;
 export default userSlice.reducer;
