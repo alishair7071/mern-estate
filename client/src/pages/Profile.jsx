@@ -24,8 +24,8 @@ const Profile = () => {
       //this function call to uploadImage function that is in separate file
       //and set public url on the useState() of imageUrl
  const handleUpload= async (file)=>{
-        const userName= currentUser;
-        const result = await uploadImage(file, userName);
+
+        const result = await uploadImage(file);
         if (result.error) {
             alert("Upload failed: " + result.error);
           } else {

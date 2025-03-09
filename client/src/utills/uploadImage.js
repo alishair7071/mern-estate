@@ -4,7 +4,7 @@ import { supabase } from "../supabaseClient";
 
 
 
-export const uploadImage = async (file, userName) => {
+export const uploadImage = async (file) => {
   
     console.log("uploadImage is called");
   if (!file) return { error: "No file selected" };
@@ -35,6 +35,7 @@ export const uploadImage = async (file, userName) => {
     .getPublicUrl(fileName);
     
     console.log("Public URL:", publicData.publicUrl);
+    //return publicData.publicUrl;
     return { publicData: publicData };
     
 };

@@ -1,4 +1,56 @@
+import { useState } from "react";
+import { uploadImage } from "../utills/uploadImage";
+
 const CreateListing = () => {
+  const [files, setFiles] = useState([]);
+  const [formData, setFormData] = useState({
+    imagesUrls: [],
+  });
+  const [uploadImageError, setUploadImageError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+
+  //upload images by calling a function 'uploadImage' that is in separate file
+  const uploadImages = async (files) => {
+    let imagesUrlsArrayFromSupabase = [];
+
+    if (files.length > 0 && files.length < 7) {
+        setIsLoading(true);
+      for (let file of files) {
+        const result = await uploadImage(file);
+        if (result.error) {
+          alert("Upload failed: " + result.error);
+          setIsLoading(false);
+        setUploadImageError(false);
+        } else {
+          imagesUrlsArrayFromSupabase.push(result.publicData.publicUrl);
+        }
+      }
+      setFormData({
+        ...formData,
+        imagesUrls: formData.imagesUrls.concat(imagesUrlsArrayFromSupabase),
+      });
+      setUploadImageError(false);
+      setIsLoading(false);
+    } else {
+      setUploadImageError("You can only upload 6 images at once");
+    }
+  };
+
+  //delete images from formData actually this function will delete image from formData,
+  //not from supabase
+
+  const deleteImage= (index)=>{
+
+    setFormData({
+
+        ...formData,
+        imagesUrls : formData.imagesUrls.filter((url,i)=> i !== index)
+  });
+
+
+  }
+
   return (
     <main className="mx-auto max-w-3xl p-3">
       <h1 className="text-3xl font-semibold text-center my-6">
@@ -117,15 +169,43 @@ const CreateListing = () => {
             </span>
           </p>
 
-          <div className="flex gap-3"> 
-            <input type="file"  id="images" accept="image/*" multiple
-            className="border border-gray-500 rounded-lg p-2 w-full"/>
+          <div className="flex gap-3">
+            <input
+              onChange={(e) => setFiles(e.target.files)}
+              type="file"
+              max={6}
+              id="images"
+              accept="image/*"
+              multiple
+              className="border border-gray-500 rounded-lg p-2 w-full"
+            />
 
-            <button className="uppercase rounded
-             p-3 text-green-500 border border-green-500 hover:shadow-xl">Upload</button>
+            <button
+              onClick={() => uploadImages(files)}
+              type="button"
+              className="uppercase rounded
+             p-3 text-green-500 border border-green-500 hover:shadow-xl"
+            >
+              {isLoading ? 'uploading...' : 'upload'}
+            </button>
+
           </div>
+          <p className="text-red-600">{uploadImageError && uploadImageError}</p>
 
-          <button className="uppercase bg-slate-700 text-white shadow-lg rounded-lg p-2">Create listing</button>
+          {formData.imagesUrls.length > 0 && formData.imagesUrls.map ((url, index)=>(
+            <div key={index} className="flex justify-between items-center p-3">
+                <img src={url} alt="listing Images" className="w-20 h-20"/>
+                <button onClick={()=>deleteImage(index)} type="button" className="text-red-500 uppercase">delete</button>
+            </div>
+          ))}
+
+          <button
+            onClick={print}
+            type="button"
+            className="uppercase bg-slate-700 text-white shadow-lg rounded-lg p-2"
+          >
+            Create listing
+          </button>
         </div>
       </form>
     </main>
