@@ -20,6 +20,8 @@ function App() {
         <Route element={<PrivateRoute/>}>
           <Route path="/Profile" element={<Profile />} />
           <Route path="/create-listing" element={<CreateListing />} />
+          <Route path="/listings/:id" element={<CreateListing />} />
+
         </Route>
       </Routes>
     </BrowserRouter>

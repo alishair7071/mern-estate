@@ -38,7 +38,7 @@ const listingSchema= new mongoose.Schema({
         required: true
     },
 
-    furnsished: {
+    furnished: {
         type: Boolean,
         required: true
     },
@@ -58,7 +58,7 @@ const listingSchema= new mongoose.Schema({
         required: true
     },
 
-    imageUrls: {
+    imagesUrls: {
         type: Array,
         required: true
     },

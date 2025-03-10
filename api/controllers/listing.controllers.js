@@ -4,13 +4,21 @@ const listingModel = require("../models/listing.model");
 
 const createListing=async (req, res, next)=>{
 
+      console.log(req.body);
+
       try{
+            console.log("enterd in try");
 
             const listing= await listingModel.create(req.body);
             res.status(201).json(listing);
+
+            console.log("ending try");
         
       }catch(e){
-        next(e);
+            console.log("enter in catch");
+
+        next(e.message);
+        console.log(e.message);
       }
 
 
