@@ -132,6 +132,27 @@ const Profile = () => {
     }
   };
 
+  //delete listing
+
+  const delListing= async (id)=>{
+    try{
+      const response = await fetch(`/api/listing/delete/${id}`, {
+        method: 'DELETE',
+      });
+      const jsonData= await response.json();
+      if(jsonData.success==false){
+        console.log(jsonData.message);
+        return
+      }
+      console.log("Delete successfully");
+      setUserListings((previousList)=>
+      previousList.filter((listing)=>{
+        return listing._id !== id;
+      }))
+
+    }catch(e){}
+  }
+
   return (
     <div className="flex flex-col justify-center items-center gap-5">
       <div>
@@ -243,7 +264,7 @@ const Profile = () => {
 
                 <div className="flex flex-col ml-auto">
                   <button className="text-green-700">Edit</button>
-                  <button className="text-red-700">Delete</button>
+                  <button onClick={()=>delListing(listing._id)} className="text-red-700 hover:cursor-pointer">Delete</button>
                 </div>
               </div>
         
