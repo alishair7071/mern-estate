@@ -27,6 +27,7 @@ const Profile = () => {
   const dispatch = useDispatch();
   const [updateSuccess, setUpdateSuccess] = useState(false);
 
+
   //this function pick the selected picture from input and save it in file variable
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
@@ -239,7 +240,7 @@ const Profile = () => {
         </span>
       </div>
 
-      <button onClick={handleShowListing} className="text-green-700">
+      <button onClick={handleShowListing} className="text-green-700 hover:cursor-pointer hover:underline">
         show listings
       </button>
       <p className="text-red-700">{showListingError && showListingError}</p>
@@ -263,7 +264,9 @@ const Profile = () => {
                 </Link>
 
                 <div className="flex flex-col ml-auto">
-                  <button className="text-green-700">Edit</button>
+                  <Link to={`/update-listing/${listing._id}`}>
+                  <button className="text-green-700 hover:cursor-pointer hover:underline">Edit</button>
+                  </Link>
                   <button onClick={()=>delListing(listing._id)} className="text-red-700 hover:cursor-pointer">Delete</button>
                 </div>
               </div>
