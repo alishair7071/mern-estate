@@ -61,19 +61,22 @@ const getUserListings = async (req, res, next) => {
   }
 };
 
-const getUser= async (req, res, next)=>{
-
-  try{
+const getUser = async (req, res, next) => {
+  try {
     const user = await userModel.findById(req.params.id);
-    if(!user) return next(errorHandler(404, 'User not found!'));
+    if (!user) return next(errorHandler(404, "User not found!"));
     const { password, ...newUser } = user._doc;
     res.status(200).json(newUser);
-
-
-  }catch(e){
+  } catch (e) {
     next(e);
   }
+};
 
-}
 
-module.exports = { test, updateUser, deleteUser, getUserListings, getUser };
+module.exports = {
+  test,
+  updateUser,
+  deleteUser,
+  getUserListings,
+  getUser,
+};
