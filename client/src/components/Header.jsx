@@ -10,7 +10,7 @@ const Header = () => {
   const navigate = useNavigate();
 
   const handleSubmit = (e)=>{
-    e.preventDefault(); 
+    e.preventDefault();
     const urlParams = new URLSearchParams(window.location.search);
     urlParams.set('searchTerm', searchTerm);
     const searchQuery= urlParams.toString();
