@@ -127,7 +127,7 @@ const CreateListing = () => {
       }
       setLoadingForServer(false);
       setError(null);
-      navigate(`/listings/${jsonData._id}`);
+      navigate(`/listing/${jsonData._id}`);
       console.log("created successfully");
       
     } catch (e) {

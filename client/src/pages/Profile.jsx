@@ -250,8 +250,8 @@ const Profile = () => {
       {userListings.length > 0 &&
         
         userListings.map((listing) => {
-          return <div className=" w-lg flex items-center gap-6 shadow-xl p-3 bg-amber-30">
-                <Link to={"/listing"+currentUser._id}>
+          return <div className="w-lg flex items-center gap-6 shadow-xl p-3 bg-amber-30">
+                <Link to={"/listing/"+listing._id}>
                   <img
                     className="w-25 h-25 object-cover"
                     src={listing.imagesUrls[0]}
@@ -259,8 +259,8 @@ const Profile = () => {
                   />
                 </Link>
 
-                <Link to={"/listing"+currentUser._id}>
-                <p className="font-semibold hover:underline truncate">{listing.name}</p>
+                <Link to={"/listing/"+listing._id} className="flex-1">
+                <p className="max-w-[250px] font-semibold hover:underline truncate">{listing.name}</p>
                 </Link>
 
                 <div className="flex flex-col ml-auto">
