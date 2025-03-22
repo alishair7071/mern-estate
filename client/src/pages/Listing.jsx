@@ -26,7 +26,6 @@ const Listing = () => {
   const { currentUser } = useSelector((store) => store.user);
   const [contact, setContact] = useState(false);
 
-
   useEffect(() => {
     const fetchListing = async () => {
       try {
@@ -70,15 +69,13 @@ const Listing = () => {
       {listing && !loading && !error && (
         <div>
           <Swiper navigation>
-            {listing.imagesUrls.map((url) => (
-              <SwiperSlide key={url}>
-                <div
-                  className="h-[450px]"
-                  style={{
-                    background: `url(${url}) center no-repeat`,
-                    backgroundSize: "cover",
-                  }}
-                ></div>
+            {listing.imagesUrls.map((url, index) => (
+              <SwiperSlide key={index}>
+                <img
+                  src={url}
+                  alt={`Slide ${index}`}
+                  className="w-full h-[450px] object-cover"
+                />
               </SwiperSlide>
             ))}
           </Swiper>
@@ -147,27 +144,24 @@ const Listing = () => {
 
               <li className="flex items-center gap-2 whitespace-nowrap">
                 <FaParking className="text-lg" />
-                {listing.parking 
-                  ? 'Parking'
-                  : 'No Parking'}
+                {listing.parking ? "Parking" : "No Parking"}
               </li>
 
               <li className="flex items-center gap-2 whitespace-nowrap">
                 <FaChair className="text-lg" />
-                {listing.furnished
-                  ? 'Furnished'
-                  : 'Unfurnished'}
+                {listing.furnished ? "Furnished" : "Unfurnished"}
               </li>
             </ul>
-                  {currentUser && listing.userRef !== currentUser._id 
-                  && !contact
-                  && (
-            <button onClick={()=>setContact(true)} className="bg-slate-700 text-white
-             uppercase p-3 rounded-lg hover:opacity-85">Contact landlord</button>
+            {currentUser && listing.userRef !== currentUser._id && !contact && (
+              <button
+                onClick={() => setContact(true)}
+                className="bg-slate-700 text-white
+             uppercase p-3 rounded-lg hover:opacity-85"
+              >
+                Contact landlord
+              </button>
             )}
-            {
-              contact && <Contact listing= {listing}/>
-            }
+            {contact && <Contact listing={listing} />}
           </div>
         </div>
       )}
